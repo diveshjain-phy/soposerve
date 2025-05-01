@@ -24,9 +24,9 @@ async def search_results_view(
     filter: str = "products",
 ):
     if filter == "products":
-        results = await product.search_by_name(q)
+        results = await product.search_by_name(q, user)
     elif filter == "collections":
-        results = await collection.search_by_name(q)
+        results = await collection.search_by_name(q, user)
     else:
         results = []
 
@@ -105,7 +105,7 @@ async def searchmetadata_results_view(
         else:
             metadata_filters[key] = {"$regex": value, "$options": "i"}
 
-    results = await product.search_by_metadata(metadata_filters)
+    results = await product.search_by_metadata(metadata_filters, user)
 
     return templates.TemplateResponse(
         "search_results.html",
